@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +17,10 @@ namespace Snake
         public void render()
         {
             Console.SetCursorPosition(x, y);
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Write("A");
+            Console.ResetColor();
         }
         public int x, y;
 
