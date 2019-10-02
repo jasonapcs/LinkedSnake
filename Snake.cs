@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,16 +59,24 @@ namespace Snake
             parts[0].dir = d;
         }
 
-        public void move()
+        public Part move()
         {
+            Part old = parts[parts.Count - 1];
             direction currd = parts[0].dir;
             for (int i = 0; i < parts.Count; i++)
             {
+                if (i == parts.Count - 1)
+                {
+                    Console.SetCursorPosition(parts[i].x, parts[i].y);
+                    Console.Write(" ");
+                    Console.SetCursorPosition(width - 2, height - 1);
+                }
                 direction tempd = parts[i].dir;
                 parts[i].move();
                 parts[i].dir = currd;
                 currd = tempd;
             }
+            return old;
         }
 
         public void render()
