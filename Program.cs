@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,12 +24,14 @@ namespace Snake
             bool running = true;
             Apple apple;
             Random rand = new Random();
+            Part OldPart;
 
             int appleX, appleY;
 
-            Console.Title = "Snake";
+            begin:;
+            Console.Clear();
 
-        begin:;
+            Console.Title = "Snake (Score: 0)";
             score = 0;
             Console.Clear();
             Snake snake = new Snake(width, height);
@@ -39,8 +41,8 @@ namespace Snake
 
             do
             {
-                appleX = rand.Next(0, width);
-                appleY = rand.Next(0, height);
+                appleX = rand.Next(1, width - 1);
+                appleY = rand.Next(1, height - 1);
             } while (snake.containsPoint(appleX, appleY));
             apple = new Apple(appleX, appleY);
 
@@ -48,7 +50,8 @@ namespace Snake
             {
                 while (nextTick < timer.ElapsedMilliseconds)
                 {
-                    snake.move();
+                    bool changeScore = false;
+                    OldPart = snake.move();
                     if (snake.isOffScreen() || snake.checkCollision())
                     {
                         running = false;
@@ -83,6 +86,10 @@ namespace Snake
                                 snake.changeDirection(direction.right);
                                 break;
 
+                            case ConsoleKey.P:
+                                Console.ReadLine();
+                                break;
+
                             default:
                                 break;
                         }
@@ -92,24 +99,22 @@ namespace Snake
                     {
                         snake.addPart();
                         score++;
+                        changeScore = true;
+                        Console.Title = "Snake (Score: " + score + ")";
                         do
                         {
-                            appleX = rand.Next(0, width);
-                            appleY = rand.Next(0, height);
+                            appleX = rand.Next(1, width - 1);
+                            appleY = rand.Next(1, height - 1);
                         } while (snake.containsPoint(appleX, appleY));
 
                         apple = new Apple(appleX, appleY);
                     }
 
-                    Console.Clear();
+                    Console.SetCursorPosition(OldPart.x, OldPart.y);
+                    Console.Write(" ");
                     snake.render();
                     apple.render();
 
-                    Console.SetCursorPosition(0, height - 1);
-                    Console.BackgroundColor = ConsoleColor.Gray;
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.Write("Score: " + score);
-                    Console.ResetColor();
                     Console.SetCursorPosition(width - 2, height - 1);
 
                     nextTick += 100;
