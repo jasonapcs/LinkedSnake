@@ -17,7 +17,7 @@ namespace Snake
         public void render()
         {
             Console.SetCursorPosition(x, y);
-            Console.BackgroundColor = ConsoleColor.Red;
+            Console.BackgroundColor = ConsoleColor.DarkRed;
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("A");
             Console.ResetColor();

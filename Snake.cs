@@ -84,19 +84,27 @@ namespace Snake
             for (int i = 0; i < parts.Count; i++)
             {
                 Part p = parts[i];
-                Console.SetCursorPosition(p.x, p.y);
-                if (p.head)
+                try
                 {
-                    Console.Write("@");
+                    Console.SetCursorPosition(p.x, p.y);
+                    if (p.head)
+                    {
+                        Console.Write("@");
+                    }
+                    else if (p.tail)
+                    {
+                        Console.Write("*");
+                    }
+                    else
+                    {
+                        Console.Write("0");
+                    }
                 }
-                else if (p.tail)
+                catch (System.ArgumentOutOfRangeException e)
                 {
-                    Console.Write("*");
+                    ;
                 }
-                else
-                {
-                    Console.Write("0");
-                }
+
             }
         }
 

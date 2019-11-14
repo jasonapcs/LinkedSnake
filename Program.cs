@@ -88,6 +88,8 @@ namespace Snake
 
                             case ConsoleKey.P:
                                 Console.ReadLine();
+                                nextTick = timer.ElapsedMilliseconds;
+                                Console.Clear();
                                 break;
 
                             default:
@@ -110,14 +112,12 @@ namespace Snake
                         apple = new Apple(appleX, appleY);
                     }
 
-                    Console.SetCursorPosition(OldPart.x, OldPart.y);
-                    Console.Write(" ");
                     snake.render();
                     apple.render();
 
                     Console.SetCursorPosition(width - 2, height - 1);
 
-                    nextTick += 100;
+                    nextTick += (score < 15) ? 100 - score * 5 : 25;
                     
                 }
 
@@ -125,6 +125,8 @@ namespace Snake
 
             timer.Stop();
 
+            snake.render();
+            apple.render();
             Console.SetCursorPosition(0, 0);
             Console.Write("Do you want to try again? (y/n) ");
             string s = Console.ReadLine();
